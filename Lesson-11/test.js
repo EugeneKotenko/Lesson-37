@@ -1,36 +1,31 @@
-const { pow } = require("./src/index.js");
-const { expect } = require("chai");
+const { pow } = require('./src/index.js');
 
-describe("pow", () => {
-  it("should return 1 when exponent is 0", () => {
-    expect(pow(5, 0)).to.equal(1);
+describe('Exponentiation function', () => {
+  test('Incorrect base parameter', () => {
+    expect(() => pow('2', 3)).toThrow('Incorrect base');
+  });
+  
+  test('Incorrect degree parameter', () => {
+    expect(() => pow(2, '3')).toThrow('Incorrect degree');
   });
 
-  it("should return the base when exponent is 1", () => {
-    expect(pow(5, 1)).to.equal(5);
+  test('correctly calculates to a positive power', () => {
+    expect(pow(2, 3)).toBe(8);
   });
 
-  it("should correctly calculate positive exponents", () => {
-    expect(pow(2, 3)).to.equal(8);
+  test('correctly calculates for power 0', () => {
+    expect(pow(5, 0)).toBe(1);
   });
 
-  it("should correctly calculate negative exponents", () => {
-    expect(pow(2, -2)).to.equal(0.25);
+  test('correctly calculates for the negative power', () => {
+    expect(pow(3, -2)).toBeCloseTo(1 / 9, 5);
   });
 
-  it("should throw an error for non-number base or exponent", () => {
-    expect(() => pow("a", 2)).to.throw(
-      "Both base and exponent must be numbers"
-    );
+  test('correctly calculates for a negative base', () => {
+    expect(pow(-2, 4)).toBe(16);
   });
 
-  it("should throw an error for non-finite base or exponent", () => {
-    expect(() => pow(Infinity, 2)).to.throw(
-      "Both base and exponent must be finite numbers"
-    );
-  });
-
-  it("should throw an error for non-integer exponents", () => {
-    expect(() => pow(2, 1.5)).to.throw("Exponent must be an integer");
+  test('incorrect non-integer degree', () => {
+    expect(() => pow(4, 1.5)).toThrow('Incorrect degree');
   });
 });

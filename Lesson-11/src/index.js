@@ -1,37 +1,25 @@
 function pow(num, degree) {
-    if (typeof num !== 'number' || typeof degree !== 'number') {
-      throw new Error('Both base and exponent must be numbers');
-    }
-  
-    if (!Number.isFinite(num) || !Number.isFinite(degree)) {
-      throw new Error('Both base and exponent must be finite numbers');
-    }
-  
-    if (!Number.isInteger(degree)) {
-      throw new Error('Exponent must be an integer');
-    }
-  
-    if (degree === 0) {
-      return 1;
-    }
-  
-    if (degree > 0) {
-      let result = 1;
-      for (let i = 0; i < degree; i++) {
-        result *= num;
-      }
-      return result;
-    }
-  
-    if (degree < 0) {
-      let result = 1;
-      for (let i = 0; i < -degree; i++) {
-        result /= num;
-      }
-      return result;
-    }
+  if (typeof num !== "number" || isNaN(num)) {
+    throw new Error("Incorrect base");
   }
-  
-console.log(pow(3,3))
+
+  if (!Number.isInteger(degree)) {
+    throw new Error("Incorrect degree");
+  }
+
+  if (degree === 0) {
+    return 1;
+  } else if (degree < 0) {
+    return 1 / pow(num, -degree);
+  } else {
+    return num * pow(num, degree - 1);
+  }
+}
+
+try {
+  console.log(pow(2, 2));
+} catch (error) {
+  console.error(error.message);
+}
 
 module.exports = { pow };

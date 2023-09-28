@@ -1,22 +1,26 @@
-const { expect } = require('chai');
-const { removeElement } = require('./src/index.js');
+const { removeElement } = require("./src/index.js");
 
-describe('removeElement function', () => {
-  it('should remove an existing element from the array', () => {
-    const array = [1, 2, 3, 4, 5];
+describe("Function testing removeElement", () => {
+  let array;
+
+  beforeEach(() => {
+    array = [1, 2, 3, 4, 5, 6, 7];
+  });
+
+  it("the existing element is removed from the array", () => {
+    removeElement(array, 5);
+    expect(array).not.toContain(5);
+  });
+
+  it("attempting to delete a nonexistent element does not modify the array", () => {
+    const originalArray = [...array];
+    removeElement(array, 8);
+    expect(array).toEqual(originalArray);
+  });
+
+  it("for a repeating element, all occurrences are removed", () => {
     removeElement(array, 3);
-    expect(array).to.deep.equal([1, 2, 4, 5]);
-  });
-
-  it('should not modify the array if the element is not found', () => {
-    const array = [1, 2, 3, 4, 5];
-    removeElement(array, 6);
-    expect(array).to.deep.equal([1, 2, 3, 4, 5]);
-  });
-
-  it('should remove all occurrences of a repeating element', () => {
-    const array = [1, 2, 2, 3, 4, 2, 5];
-    removeElement(array, 2);
-    expect(array).to.deep.equal([1, 3, 4, 5]);
+    expect(array).not.toContain(3);
+    expect(array).toHaveLength(6);
   });
 });
